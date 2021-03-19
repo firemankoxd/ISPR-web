@@ -112,7 +112,48 @@
     <div class="article" id="last">
       <h4>3.) Príprava HTML stránky na prihlasovanie a dynamickú činnosť</h4>
       <div class="text">
-        
+        <p>
+          Na pridanie možnosti prihlasovania využijeme príklad od spoločnosti Siemens. 
+          Príklad je možné stiahnúť tu: <a href="./download/step_7_main_webpage.zip" id="link">step_7_main_webpage.zip</a>
+        </p>
+        <p>
+          Podľa uvedeného príkladu pridáme do nášho HTML súboru nasledovné elementy (vloženie funkcie <i>loginCheck()</i> je popísané na podstránke <a href="javascript.html" id="link">JavaScript</a>):
+        </p>
+        <pre id="code-insert"><code>&lt;body <span id="code-change">onload="loginCheck()"</span>>
+  &lt;header>
+    .
+    .
+    <span id="code-change">&lt;iframe id="WebserverIFrame" name="WebserverIFrameName" src="/Portal/Portal.mwsl" style="display:none">&lt;/iframe></span>
+    <span id="code-change">&lt;div id="loginBox" class="Login_Area">&lt;/div></span>
+  &lt;/header>
+&lt;/body></code></pre>
+        <p>
+          Ďalej je nutné si vytvoriť ovládacie prvky na webe tak, aby sme pomocou JavaScriptu vedeli meniť ich obsah.
+          Výhodným riešením je použitie &lt;span> tagov a priradenie každému tagu unikátne ID. 
+          Nižšie uvedený príklad znázorňuje prvý ovládací box z <a href="index.html" id="link">úvodnej stránky</a>, teda zmenu a zobrazovanie tagu typu BOOL.
+        </p>
+        <pre id="code-insert"><code>&lt;div id="startStop">
+  &lt;h3>Systém&lt;/h3>
+  &lt;p>Stav systému: <span id="code-change">&lt;span id="statusText">###&lt;/span></span>&lt;/p>
+  &lt;form method="post" <span id="code-change">id="submit-StartStop"</span> action="">
+    &lt;input type="submit" <span id="code-change">id="submit-startStop-button"</span> value="Štart">
+  &lt;/form>
+&lt;/div></code></pre>
+        <p>
+          K vyššie zvýrazneným prvkom vieme potop pristupovať v JavaScripte a čítať/meniť ich obsah.
+          Prikladám sem ešte príklad pre druhý ovládací box (na zmenu výšky loptičky), ktorý slúži na zmenu
+          a zobrazovanie číselných hodnôt tagov.
+        </p>
+        <pre id="code-insert"><code>&lt;div id="vyska">
+  &lt;h3>Výškové parametre&lt;/h3>
+  &lt;p>Skutočná výška loptičky: <span id="code-change">&lt;span id="realHeight">###&lt;/span></span> [%]&lt;/p>
+  &lt;p>Nastavená výška loptičky: <span id="code-change">&lt;span id="setHeight">###&lt;/span></span> [%]&lt;/p>
+  &lt;form method="post" <span id="code-change">id="submit-setHeight"</span> action="">
+    &lt;input type="number" <span id="code-change">id="setHeight-value"</span> min="0" max="100">
+    [%]
+    &lt;input type="submit" id="button-right" value="Nastaviť výšku">
+    &lt;/form>
+&lt;/div></code></pre>
       </div>
     </div>
     <footer>
