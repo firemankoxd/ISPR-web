@@ -39,6 +39,7 @@
         <p>
           Po pridaní HTML elementov pre prihlasovanie na stránke HTML už len ostáva doplniť prihlasovaciu funkciu.
           Siemens ju uvádza v spomenutom príklade na predošlej stránke a nie je vôbec potreba ju nijako upravovať.
+          Po pridaní tejto funkcie sa na stránke objaví prihlasovacie okno, cez ktoré je možné sa prihlásiť pomocou konta vytvoreného v programe TIA Portal.
           Funkcia vyzerá nasledovne:
         </p>
         <pre id="code-insert"><code>function loginCheck() {
@@ -68,13 +69,95 @@
       console.log("Login successful!");
   }
 }</code></pre>
-        <p>
-          Po pridaní tejto funkcie sa na stránke objaví prihlasovacie okno, cez je možné sa prihlásiť pomocou konta vytvoreného v programe TIA Portal.
-        </p>
       </div>
     </div>
     <div class="article">
-      <h4>2.) No</h4>
+      <h4>2.) Cyklická aktualizácia údajov na webe na základe PLC tagov</h4>
+      <div class="text">
+        <p>
+          Pre túto časť sme si pripravili na podstránke <a href="html.html" id="link">HTML</a> &lt;span> tagy, ku ktorým budeme pristupovať. 
+          Aby sme si to ešte viac zjednodušili, vytvoríme si ďalší súbor <i>inputs.htm</i>, v ktorom budú uvedené názvy všetky premenných, ktorých hodnoty budeme z PLC načítavať.
+          Súbor bude mať štruktúru JSON (JavaScript Object Notation). Obsah súboru vyzerá nasledovne:
+        </p>
+        <pre id="code-insert"><code>{
+  "systemStatus" : ":="systemButton":",
+  "realHeight" : ":="realHeight":",
+  "setHeight" : ":="setHeight":"
+}</code></pre>
+        <div class="imgs">
+          <a href="./img/requests.png" target="_blank"><img src="./img/requests.png"></a>
+        </div>
+        <p>
+          Tento súbor bude slúžiť ako adresa pre GET requesty PLC servera. Na základe GET requestu odošle spätne PLC Web server na stránku hodnoty tagov uvedených v súbore.
+          Výsledkom tohoto GET requstu bude dátový typ JSON, ktorý bude mať tvar podobný súboru <i>inputs.htm</i>, no na pravej strane budú namiesto AWP príkazov pre načítanie premennej
+          reálne hodnoty tagov. Na základe týchto hodnôt môžeme hneď obsah stránky aktualizovať. GET requesty môžu byť obslúžené nasledovnou funkciou:
+        </p>
+        <pre id="code-insert"><code>function httpGet(<span id="code-change">theUrl</span>){
+  xmlhttp = new XMLHttpRequest();
+  var date = new Date();
+  xmlhttp.open(<span id="code-change">"GET"</span>, <span id="code-change">theUrl</span> + "?" + date.getTime(), false );
+  xmlhttp.send();
+  setInterval(function(){
+    if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+      jsonString = xmlhttp.responseText;
+      data = $.parseJSON(jsonString);
+      document.getElementById(<span id="code-change">"statusText"</span>).innerHTML = (parseInt(<span id="code-change">data.systemStatus</span>) == 0) ? "Vypnutý" : "Zapnutý";
+      document.getElementById(<span id="code-change">"statusText"</span>).style.color = (parseInt(<span id="code-change">data.systemStatus</span>) == 0) ? "red" : "green";
+      document.getElementById(<span id="code-change">"submit-startStop-button"</span>).value = (parseInt(<span id="code-change">data.systemStatus</span>) == 0) ? "Štart" : "Stop";
+      document.getElementById(<span id="code-change">"realHeight"</span>).innerHTML = <span id="code-change">data.realHeight</span>;
+      document.getElementById(<span id="code-change">"setHeight"</span>).innerHTML = <span id="code-change">data.setHeight</span>;
+    }
+  }, <span id="code-change">650</span>);
+}</code></pre>
+        <p>
+          Túto funkciu stačí už len cyklicky volať v programe a ako argument do nej vložiť cestu k spomenutému súboru <i>inputs.htm</i>. 
+          Vrátená správa o hodnotách sa ukladá do premennej <i>jsonString</i>, ktorá sa rozbije na objekt <i>data</i>. 
+          Potom už len pristupujeme k jednotlivým prvkom tohoto objektu ako <i>data.<b>názov_prvku</b></i>. 
+          V tejto funkcii sa na základe hodnôt z GET requestu mení aktuálny popis stavu systému, farba stavu (zelená-zapnutý, červená-vypnutý) a takisto aj text na tlačidle (ak je systém zapnutý
+          tak bude na tlačidle text "Stop" a naopak). Číselná hodnota 650 predstavuje čas v milisekundách, ako často sa GET requsty budú posielať na web server a teda aj ako často sa budú dáta na webe obnovovať.
+        </p>
+      </div>
+    </div>
+    <div class="article" id="last">
+      <h4>3.) Zápis nových hodnôt do PLC</h4>
+      <div class="text">
+        <p>
+          Na zápis nových hodnôt do PLC využívam knižnicu <a href="https://jquery.com/" target="_blank" id="link">JQuery</a>. 
+          Obsahuje množstvo funkcií pre lepšiu orientáciu v dokumente, pre spracovanie udalostí (ako je napríklad stlačenie tlačidla)
+          a pre technológiu AJAX, ktorú využívame na POST requesty na server. Pomocou týchto POST requestov zapisujeme do PLC nové hodnoty tagov. 
+          Pomocou JQuery knižnice takisto zabránime tomu, aby sa po stlačení tlačidla stránka sama refreshla (ide o funkciu <i>preventDefault()</i>), pretože to už nepotrebujeme, nakoľko sa nám údaje aktualizujú cyklicky.
+        </p>
+        <pre id="code-insert"><code>$(document).ready(function($) {
+  $(document).on('submit', <span id="code-change">'#submit-StartStop'</span>, function(event) {
+    event.preventDefault();
+    let new_val = !(parseInt(<span id="code-change">data.systemStatus</span>));
+    $.ajax({
+      type: <span id="code-change">"POST"</span>,
+      url: <span id="code-change">"index.html"</span>,
+      data: <span id="code-change">"%22systemButton%22="</span> + new_val.toString(),
+      dataType: "xml"
+    });
+  });
+  $(document).on('submit', <span id="code-change">'#submit-setHeight'</span>, function(event) {
+    event.preventDefault();
+    $.ajax({
+      type: <span id="code-change">"POST"</span>,
+      url: <span id="code-change">"index.html"</span>,
+      data: <span id="code-change">"%22systemButton%22="</span> + document.getElementById(<span id="code-change">"setHeight-value"</span>).value,
+      dataType: "xml"
+    });
+  });
+});</code></pre>
+        <p>
+          V prvom prípade (pre ID #submit-StartStop) funkcia zapisuje hodnotu premennej typu BOOl do PLC. Zápis prebieha tak, že program uloží do novej premennej 
+          znegovanú hodnotu aktuálnej hodnoty a pripíše ju k názvu tagu v PLC. V názve tagu sa používa trojica symbolov "%22", ktorá predstavuje úvodzovky ("), aby 
+          ich program v JavaScripte odignoroval.
+        </p>
+        <p>
+          V druhom prípade (pre ID #submit-setHeight) funkcia len pripíše k názvu tagu hodnotu, ktorá sa nachádza v &lt;input> HTML tagu s ID #setHeight-value a odošle ju do PLC.
+        </p>
+      </div>
     </div>
     <footer>
       <p>Filip Kalus, 2020/2021</p>
