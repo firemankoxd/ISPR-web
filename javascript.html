@@ -33,6 +33,49 @@
         </ul>
       </nav>
     </header>
+    <div class="article">
+      <h4>1.) Pridanie funkcie na prihlásenie</h4>
+      <div class="text">
+        <p>
+          Po pridaní HTML elementov pre prihlasovanie na stránke HTML už len ostáva doplniť prihlasovaciu funkciu.
+          Siemens ju uvádza v spomenutom príklade na predošlej stránke a nie je vôbec potreba ju nijako upravovať.
+          Funkcia vyzerá nasledovne:
+        </p>
+        <pre id="code-insert"><code>function loginCheck() {
+  var iFrameElement = document.getElementById('WebserverIFrame');
+  var loginForm = iFrameElement.contentWindow.document.getElementById('loginForm'); <span id="code-comment">//S7-1200 FW4.0</span>
+  if (loginForm == null) {
+      loginForm = iFrameElement.contentWindow.document.getElementById('Login_Area_Form'); <span id="code-comment">//S7-1200 FW2.2 and S7-1500 FW1.5</span>
+  }
+  if(loginForm) {
+      loginForm.setAttribute("data-ajax", "false");
+      document.getElementById('loginBox').innerHTML = loginForm.parentNode.innerHTML;
+      document.getElementsByName("Redirection")[0]["value"] = window.location.href.split("?")[0];
+      console.log("You are not logged in!");
+  }
+
+  var logoutForm = iFrameElement.contentWindow.document.getElementById('logoutForm'); <span id="code-comment">//S7-1200 FW4.0</span>
+  if(logoutForm == null) {
+      logoutForm = iFrameElement.contentWindow.document.getElementById('logout_form'); <span id="code-comment">//S7-1200 FW2.2</span>
+  }
+  if(logoutForm == null) {
+      logoutForm = iFrameElement.contentWindow.document.getElementById('Logout_Area_Form'); <span id="code-comment">//S7-1500 FW1.5</span>
+  }
+  if(logoutForm) {
+      logoutForm.setAttribute("data-ajax", "false");
+      document.getElementById('loginBox').innerHTML = logoutForm.parentNode.innerHTML;
+      document.getElementsByName("Redirection")[0]["value"] = window.location.href.split("?")[0];
+      console.log("Login successful!");
+  }
+}</code></pre>
+        <p>
+          Po pridaní tejto funkcie sa na stránke objaví prihlasovacie okno, cez je možné sa prihlásiť pomocou konta vytvoreného v programe TIA Portal.
+        </p>
+      </div>
+    </div>
+    <div class="article">
+      <h4>2.) No</h4>
+    </div>
     <footer>
       <p>Filip Kalus, 2020/2021</p>
     </footer>
