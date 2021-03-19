@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="sk">
+  <head>
+    <meta charset="utf-8">
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="./img/krisicon.png">
+    <meta name="author" content="Filip Kalus">
+    <title>Vizualizácia | Filip Kalus</title>
+    <link rel="stylesheet" href="./style.css">
+    <script src="jquery-2.0.2.min.js"></script>
+    <script src="https://kit.fontawesome.com/0797fc1598.js" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="img">
+          <a href="http://kris.uniza.sk/" target="_blank"><img src="./img/logoV2.png"></a>
+        </div>
+        <div class="nadpis">
+          <h1>Web server pre PLC od spoločnosti Siemens</h1>
+          <h4>Návod na tvorbu vizualizačného rozhrania k pracovisku pomocou PLC Web servera</h4>
+        </div>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="index.html"><i class="fas fa-home"></i>Domov</a></li>
+          <li><a href="about.html"><i class="fas fa-question-circle"></i>O projekte</a></li>
+          <li><a href="tiaportal.html"><i class="fas fa-chalkboard-teacher"></i>TIA Portal</a></li>
+          <li><a class="active" href="html.html"><i class="fab fa-html5"></i>HTML</a></li>
+          <li><a href="javascript.html"><i class="fab fa-js-square"></i>JavaScript</a></li>
+          <li><a href="contact.html"><i class="fas fa-address-book"></i>Kontakt</a></li>
+        </ul>
+      </nav>
+    </header>
+    <div class="article">
+      <h4>1.) Základné vytvorenie prepojenia tagu v PLC s webom</h4>
+      <div class="text">
+        <p>
+          Ako som už spomenul v úvode, spoločnosť Siemens poskytuje užitočné príklady pre vytvorenie jednoduchej web stránky na ovládanie tagov a ich nasledovné čítanie. 
+          Na prepojenie tagov s webom využíva spoločnosť tzv. AWP príkazy vo forme HTML komentov, ktoré sa pri vytváraní dátových blokov web stránky v nástroji TIA Portal 
+          pretransformujú na prepojenia.
+        </p>
+        <p>
+          AWP príkazy sú znázornené v nasledujúcej tabuľke:
+        </p>
+      </div>
+      <table>
+        <caption>AWP príkazy používané v HTML súbore</caption>
+        <tr>
+          <th>Funkcia</th>
+          <th>Príkaz</th>
+        </tr>
+        <tr>
+          <td>Čítanie premennej z PLC</td>
+          <td><pre><code>:=&lt;Varname>:</code></pre></td>
+        </tr>
+        <tr>
+          <td>Zápis do premennej v PLC</td>
+          <td><pre><code>&lt;!-- AWP_In_Variable Name='&lt;Varname>' --></code></pre></td>
+        </tr>
+        <tr>
+          <td>Definícia typu Enum</td>
+          <td><pre><code>&lt;!-- AWP_Enum_Def Name='&lt;Name Enum-Typ>' Values='0:"&lt;Text_1>",1:"&lt;Text_2>",...,x:"&lt;Text_y>"' --></code></pre></td>
+        </tr>
+        <tr>
+          <td>Priradenie typu Enum k premennej</td>
+          <td><pre><code>&lt;!-- AWP_Enum_Ref Name='&lt;Varname>' Enum='&lt;Name Enum-Typ>' --></code></pre></td>
+        </tr>
+      </table>
+    </div>
+    <div class="article">
+      <h4>2.) Príklad jednoduchého ovládania a čítania PLC tagu</h4>
+      <div class="imgs">
+        <a href="./img/webpriklad.png" target="_blank"><img src="./img/webpriklad.png"></a>
+      </div>
+      <div class="text" id="aboutCode">
+        <p>
+          Nižšie uvedený príklad vytvorí rohranie, ako je uvedené na obrázku. 
+          Tlačidlá sú vytvorené ako dve POST metódy, ktoré do PLC pošlú pre tag systemButton novú hodnotu logickej nuly alebo jednotky.
+          Stránka má však už spomenutú nevýhodu, ktorou je, že sa jej obsah nebude aktualizovať automaticky. 
+          Obsah sa aktualizuje buď pri obnovení stranky, alebo pri odoslaní novej hodnoty pomocou tlačidla.
+        </p>
+        <p>
+          PLC tag, ktorý chceme nastavovať (systemButton) je najprv zadeklarovaný pomocou spomenutého AWP príkazu na začiatku dokumentu.
+          Samotný AWP príkaz však tento tag nemení, iba "povie" PLC, že môže byť menený z tejto stránky.
+          Tag je menený pomocou tlačidla, ktoré vykoná POST metódu.
+        </p>
+        <p>
+          Čítanie tagu je jednoduchšie, vykonáva ho iba špecifická syntax, ktorá je takisto uvedená v tabuľke s AWP príkazmi. 
+        </p>
+      </div>
+      <pre id="code-insert"><code><span id="code-comment">&lt;!-- AWP_In_Variable Name='"systemButton"' --></span><br>
+&lt;!DOCTYPE html>
+  &lt;body>
+    &lt;td>
+      &lt;form method="POST" action="">
+        &lt;input type="submit" value="Zapnúť systém">
+        &lt;input type="hidden" name='"systemButton"' value="1">
+      &lt;/form>
+    &lt;/td>
+    &lt;td>
+      &lt;form method="POST" action="">
+        &lt;input type="submit" value="Vypnúť systém">
+        &lt;input type="hidden" name='"systemButton"' value="0">
+      &lt;/form>
+    &lt;/td>
+    Stav systému: :="systemButton"
+  &lt;/body>
+&lt;/html></code></pre>
+    </div>
+    <div class="article" id="last">
+      <h4>3.) Príprava HTML stránky na prihlasovanie a dynamickú činnosť</h4>
+      <div class="text">
+        
+      </div>
+    </div>
+    <footer>
+      <p>Filip Kalus, 2020/2021</p>
+    </footer>
+  </body>
+</html>

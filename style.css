@@ -1,0 +1,514 @@
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 15px;
+  padding: 0;
+  margin: 0;
+  background-color: #cecece;
+  box-sizing: border-box;
+}
+
+.container {
+  width: 98%;
+  margin-left: 10px;
+  margin-right: 10px;
+  padding-top: 15px;
+}
+
+header {
+  top: 0;
+  position: static;
+  background: #3d405b;
+  color: white;
+  height: 120px;
+  padding-top: 0px;
+  border-bottom: #e07a5f 5px solid;
+  /* margin-top: -20px !important; */
+  width: 100%;
+}
+
+header div.img {
+  float: left;
+  clear: both;
+  width: 125px;
+}
+
+header img {
+  width: 110px;
+}
+
+header img:hover {
+  border-bottom: 3px solid #e07a5f;
+  transition: .2s;
+}
+
+header div.nadpis {
+  width: 40%;
+  float: left;
+}
+
+header div.nadpis h1 {
+  margin-top: 10px;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+header div.nadpis h4 {
+  margin: 5px 0px 0px;
+  padding: 0;
+}
+
+header nav ul li {
+  font-size: 16px;
+  list-style: none;
+  text-decoration: none;
+  padding: 10px;
+  border-right: 4px solid rgba(0, 0, 0, 0.05);
+  border-bottom: 4px solid rgba(0, 0, 0, 0.05);
+  border-left: 2px solid rgba(225, 225, 225, 0.05);
+  border-top: 2px solid rgba(225, 225, 225, 0.05);
+}
+
+header nav ul li .active {
+  color: #e07a5f;
+}
+
+header nav ul li .active .fas, header nav ul li .active .fab {
+  color: yellowgreen;
+}
+
+nav ul {
+  float: right;
+  margin-right: 20px;
+  margin-left: 0px;
+  padding-left: 0px;
+}
+
+nav ul li {
+  display: inline-block;
+  line-height: 0px;
+  margin: 0 5px;
+  border-radius: 10px;
+}
+
+header nav ul li a {
+  color: #bdb8d7;
+  text-decoration: none;
+  display: block;
+  font-weight: bold;
+}
+
+header nav ul li a .fas, .fab {
+  width: 25px;
+}
+
+header nav ul li:hover {
+  background: #e07a5f;
+  transition: .7s;
+}
+
+header nav ul li:hover a, header nav ul li:hover .fas, header nav ul li:hover .fab {
+  color: black;
+  transition: .7s;
+}
+
+canvas {
+  padding: 0;
+  float: left;
+  overflow: hidden;
+  margin: 3% 15px 60px 3%;
+  border: 1px solid black;
+  border-radius: 7px;
+  /* background-color: #adadad; */
+  background-color: #3d405b;
+}
+
+.control {
+  padding: 10px;
+  margin: 3% 3% 60px 15px;
+  overflow: hidden;
+  width: auto;
+  border: 1px solid black;
+  /* background-color: #adadad; */
+  background-color: #3d405b;
+  color: white;
+  border-radius: 7px; /* POHRAJKAT SA */
+  padding: 2px;
+}
+
+.control h2, h3 {
+  text-decoration: underline;
+  text-align: center;
+  padding: 2px;
+  margin: 0;
+  margin-bottom: 5px;
+  /* border-bottom: 1px solid black; */
+}
+
+.control h2 {
+  margin-top: 10px;
+}
+
+#control-divs {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: stretch;
+  align-content: stretch;
+}
+
+#control-divs input[type=number] {
+  /* background-color: #ebe5e1; */
+  background-color: #e2e1eb;
+  border: none;
+  text-align: center;
+  border-radius: 5px;
+  height: auto;
+  margin: 6px;
+  width: 25%;
+  padding: 6px;
+}
+
+#control-divs input[type=submit] {
+  background-color: #e2e1eb;
+  border: none;
+  text-align: center;
+  border-radius: 5px;
+  height: auto;
+  margin: 6px;
+  padding: 6px;
+  width: auto;
+}
+
+#realHeight, #setHeight, #sinusFreq, #pwmValue, #PID_customvals_enable, #PID_P_val, #PID_I_val, #PID_D_val, #PID_TL_val {
+  color: yellow;
+}
+
+#control-divs #submit-StartStop, #submit-sinusStatus, #submit-pwmStatus, #submit-PID-customvals-status, #submit-PID-P-status, #submit-PID-I-status, #submit-PID-D-status {
+  text-align: center;
+}
+
+#submit-startStop-button, #submit-sinus-button, #submit-pwm-button, #submit-PID-customvals-status-button, #submit-P-status-button, #submit-I-status-button, #submit-D-status-button {
+  width: 50%;
+}
+
+#control-divs #button-right{
+  float: right;
+  width: auto;
+}
+
+#control-divs p, form {
+  margin: 6px;
+  padding: 0;
+}
+
+#startStop, #vyska, #sinus, #vykon, #regulacia, #regulacia-2nd {
+  /* display: inline-block; */
+  vertical-align: top;
+  margin: 5px;
+  padding: max(5px, 1%);
+  border: 3px solid #e07a5f;
+  border-radius: 10px;
+}
+
+.article {
+  font-size: 17px;
+  padding: 10px;
+  margin: 20px;
+  border-radius: 10px;
+  background: #3d405b;
+  color: white;
+  height: auto;
+}
+
+.article h4 {
+  margin-left: 1%;
+}
+
+#obrPrac {
+  min-height: 585px;
+}
+
+#obrIP {
+  min-height: 220px;
+}
+
+#obrWServer {
+  min-height: 290px;
+}
+
+#obrWblok {
+  min-height: 215px;
+}
+
+#obrUmanagement {
+  min-height: 625px;
+}
+
+#obrUdef {
+  min-height: 310px;
+  margin-bottom: 60px;
+}
+
+#last {
+  margin-bottom: 60px;
+}
+
+#aboutCode {
+  min-height: 160px;
+}
+
+#sekcia {
+  font-family: Consolas;
+  font-weight: bold;
+  color: #9fdb5e;
+}
+
+#link {
+  color: yellow;
+}
+
+#imgMargin {
+  margin-bottom: 10px;
+}
+
+.article table, .article th, .article td {
+  border: 1px solid black;
+  padding: 5px;
+  border-collapse: collapse;
+}
+
+.article th {
+  background: #1b1d31;
+}
+
+.article td {
+  background: #404359;
+  /* background: #A9AABC; */
+}
+
+.article table caption {
+  font-size: 17px;
+  padding-bottom: 5px;
+  font-style: italic;
+}
+
+table pre {
+  margin: 0;
+  /* https://stackoverflow.com/questions/248011/how-do-i-wrap-text-in-a-pre-tag */
+  white-space: pre-wrap;       /* Since CSS 2.1 */
+  white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+  white-space: -pre-wrap;      /* Opera 4-6 */
+  white-space: -o-pre-wrap;    /* Opera 7 */
+  word-wrap: break-word;       /* Internet Explorer 5.5+ */
+}
+
+.article table {
+  margin-left: 1%;
+  margin-bottom: 10px;
+}
+
+#code-insert {
+  margin-top: 10px;
+  margin-left: 1%;
+  width: auto;
+  padding: 15px;
+  font-size: 14px;
+  border: 1px solid black;
+  border-radius: 5px;
+  overflow: auto;
+  color: black;
+  background: #A9AABC;
+}
+
+#code-comment {
+  color: #005700;
+}
+
+.article img {
+  margin-left: 25px;
+  margin-bottom: 25px;
+  display: block;
+  overflow: auto;
+  border: 2px solid #e07a5f;
+  border-radius: 7px;
+  max-width: 450px;
+}
+
+.imgs {
+  float: right;
+}
+
+.article img:hover {
+  border-color: yellowgreen;
+}
+
+.article ol li {
+  font-weight: bold;
+  font-style: italic;
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 35px;
+  font-weight: bold;
+  font-size: 12px;
+  background: #3d405b;
+  color: white;
+  border-top: #e07a5f 3px solid;
+  text-align: center;
+}
+
+@media only screen and (max-width: 1600px) {
+  header {
+    font-size: 12px;
+    height: 100px;
+  }
+  header nav ul li {
+    font-size: 14px;
+    padding: 5px;
+    margin: 0;
+  }
+  .article {
+    font-size: 15px;
+  }
+  #control-divs input[type=submit] {
+    font-size: 12px;
+    padding: 4px;
+    width: auto;
+  }
+  #control-divs input[type=number] {
+    font-size: 12px;
+    padding: 4px;
+  }
+}
+
+@media only screen and (max-width: 1275px) {
+  header {
+    height: 160px;
+  }
+  .article table {
+    margin-left: 0;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .container {
+    width: 97%;
+  }
+  header div.img {
+    display: none !important;
+  }
+  header {
+    font-size: 12px;
+    height: 150px;
+  }
+  header div.nadpis {
+    width: 100%;
+    float: left;
+  }
+  header div.nadpis h1 {
+    margin: 0;
+  }
+  header div.nadpis h4 {
+    display: none !important;
+  }
+  canvas {
+    border-radius: 5px;
+  }
+  .article {
+    font-size: 14px;
+  }
+  .control {
+    border-radius: 5px;
+    font-size: 12px;
+  }
+  #control-divs input[type=submit] {
+    font-size: 12px;
+    padding: 4px;
+    width: auto;
+  }
+  #control-divs input[type=number] {
+    font-size: 12px;
+    padding: 4px;
+  }
+}
+
+@media only screen and (max-width: 536px) {
+  .container {
+    width: 95%;
+  }
+  header {
+    font-size: 10px;
+    height: 260px;
+  }
+  header div.nadpis h4 {
+    display: none !important;
+  }
+  nav ul {
+    float: left;
+    margin-left: 5px;
+  }
+  nav ul li {
+    display: block;
+    width: 100%;
+    float: left;
+    text-align: center;
+  }
+  canvas {
+    border-radius: 3px;
+  }
+  .control {
+    border-radius: 3px;
+    font-size: 8px;
+  }
+  #control-divs input[type=submit] {
+    font-size: 8px;
+    padding: 2px;
+    width: auto;
+  }
+  #control-divs input[type=number] {
+    font-size: 8px;
+    padding: 2px;
+  }
+  #control-divs #button-right{
+    float: none;
+  }
+  .article {
+    font-size: 13px;
+  }
+  .article .imgs {
+    width: auto;
+  }
+  .article img {
+    max-width: 100%;
+    margin-left: 0;
+  }
+}
+
+@media only screen and (max-width: 270px) {
+  .container {
+    width: 94%;
+  }
+  header {
+    height: 215px;
+    border-bottom: #e07a5f 3px solid;
+  }
+  header div.nadpis h1 {
+    font-size: 12px;
+  }
+  nav ul li a{
+    font-size: 10px;
+  }
+  .article {
+    font-size: 11px;
+  }
+  canvas {
+    border-radius: 2px;
+  }
+  .control {
+    border-radius: 2px;
+  }
+}

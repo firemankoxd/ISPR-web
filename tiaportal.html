@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="sk">
+  <head>
+    <meta charset="utf-8">
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="./img/krisicon.png">
+    <meta name="author" content="Filip Kalus">
+    <title>Vizualizácia | Filip Kalus</title>
+    <link rel="stylesheet" href="./style.css">
+    <script src="jquery-2.0.2.min.js"></script>
+    <script src="https://kit.fontawesome.com/0797fc1598.js" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="img">
+          <a href="http://kris.uniza.sk/" target="_blank"><img src="./img/logoV2.png"></a>
+        </div>
+        <div class="nadpis">
+          <h1>Web server pre PLC od spoločnosti Siemens</h1>
+          <h4>Návod na tvorbu vizualizačného rozhrania k pracovisku pomocou PLC Web servera</h4>
+        </div>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="index.html"><i class="fas fa-home"></i>Domov</a></li>
+          <li><a href="about.html"><i class="fas fa-question-circle"></i>O projekte</a></li>
+          <li><a class="active" href="tiaportal.html"><i class="fas fa-chalkboard-teacher"></i>TIA Portal</a></li>
+          <li><a href="html.html"><i class="fab fa-html5"></i>HTML</a></li>
+          <li><a href="javascript.html"><i class="fab fa-js-square"></i>JavaScript</a></li>
+          <li><a href="contact.html"><i class="fas fa-address-book"></i>Kontakt</a></li>
+        </ul>
+      </nav>
+    </header>
+    <div class="article" id="obrIP">
+      <h4>1.) Nastavenie IP adries</h4>
+      <div class="imgs">
+        <a href="./img/ipadresy.png" target="_blank"><img src="./img/ipadresy.png"></a>
+      </div>
+      <div class="text">
+        <p>
+          Vkladanie PLC do projektu nebudem opisovať, nakoľko sa v tomto webe venujem implementácii PLC web servera. Za predpokladu, že bolo PLC do projektu vložené, 
+          je ďalej nutné mu nastaviť jeho IP adresu, ako je znázornené na obrázku <i>(IP adresy katedry sú zamazané)</i>. Tieto nastavenia je možné nájsť v nastaveniach
+          PLC (<span id="sekcia">Properties</span>) pod kolónkou <span id="sekcia">PROFINET interface [X1]</span> a v rámci sekcie <span id="sekcia">Ethernet addresses</span>.
+        </p>
+        <p>
+          Políčko <span id="sekcia">Use router</span> zaškrtávame v prípade, ak sa chceme na web server pripájať aj mimo lokálnej siete (teda cez internet). Vtedy sa tam zadáva aj IP
+          adresa routera, ktorý je na internet pripojený.
+        </p>
+      </div>
+    </div>
+    <div class="article" id="obrWServer">
+      <h4>2.) Povolenie Web servera</h4>
+      <div class="imgs">
+        <a href="./img/webenable.png" target="_blank"><img id="imgMargin" src="./img/webenable.png"></a>
+        <a href="./img/webenable2.png" target="_blank"><img src="./img/webenable2.png"></a>
+      </div>
+      <div class="text">
+        <p>
+          Po nastavení IP adries nasleduje spustenie samotného web servera. Najprv je túto možnosť povoliť v rámci predošiel kolónky, teda
+          <span id="sekcia">PROFINET interface [X1]</span> pod sekciou <span id="sekcia">Web server access</span>, ako ukazuje vrchný obrázok 
+          v rámci tohto odseku. Zaškrtnutím tohoto políčka nezapíname priamo web server, iba ho povoľujeme pro dané PROFINET rozhranie.
+        </p>
+        <p>
+          Samotný web server zapneme až v nastaveniach PLC v rámci kolónky <span id="sekcia">Web Server</span> pod sekciou <span id="sekcia">General</span>, 
+          ako je znázornené na druhom obrázku (v rámci tohto odseku). V rámci tejto sekcie sa dá taktiež nastaviť, aby pripojenie prebiehalo výhradne cez
+          protokol HTTPS, ktorý je oproti klasickému HTTP naviac šifrovaný.
+        </p>
+      </div>
+    </div>
+    <div class="article" id="obrWblok">
+      <h4>3.) Vloženie web servera</h4>
+      <div class="imgs">
+        <a href="./img/wwwblok.png" target="_blank"><img id="imgMargin" src="./img/wwwblok.png"></a>
+      </div>
+      <div class="text">
+        <p>
+          Keď už máme web server povolený z <a href="#obrWServer" id="link">predošlého odseku</a>, ostáva ho už len vložiť do programu (napríklad do programu Main).
+          Môžme ho nájsť medzi inštrukciami v sekcii <span id="sekcia">Communication</span> v podpriečinku <span id="sekcia">WEB Server</span>, alebo len napísať do vyhľadávania "WWW".
+          Okrem vstupu EN (enable) sa na jeho vstup vkladá aj číslo dátového bloku CTRL_DB, ktoré je popísané v odseku <a href="#obrUdef" id="link">5.) Sekcie User-defined pages a Entry page</a>.
+        </p>
+        <p>
+          V tomto bloku ďalej nič nekonfigurujeme, nastavenia web servera sú všetky umiestnené v rôznych sekciách v nastaveniach PLC pod kolónkou <span id="sekcia">Web Server</span>.
+        </p>
+      </div>
+    </div>
+    <div class="article" id="obrUmanagement">
+      <h4>4.) Sekcia User management</h4>
+      <div class="imgs">
+        <a href="./img/usermanagement1.png" target="_blank"><img id="imgMargin" src="./img/usermanagement1.png"></a>
+        <a href="./img/usermanagement2.png" target="_blank"><img src="./img/usermanagement2.png"></a>
+      </div>
+      <div class="text">
+        <p>
+          V tejto sekcii sa spravujú uživateľské kontá, na ktoré sa na webe dokážeme prihlásiť. Pre web server som vytvoril dve kontá, jedno s názvom Everybody, 
+          ktoré nemá pridelené heslo a v jeho privilégiach má povolené len otváranie užívateľských stránok. Kontá je možné vidieť na vrchnom obrázku v tomto odseku.
+        </p>
+        <p>
+          Druhé konto s dočasným názvom filip má pridelené heslo a v privilégiach má naviac povolené upravovať hodnoty tagov cez tzv. AWP príkazy, ako je možné vidieť 
+          na spodnom obrázku. Do privilégií sa dostaneme po kliknutí na šípku pri danom užívateľovi v rámci stĺpca <span id="sekcia">Access level</span>.
+        </p>
+        <p>
+          Vytvorenie užívateľského konta je dôležité, nakoľko sa na webe budú môcť upravovať hodnoty tagov v PLC len po prihlásení užívateľa.
+        </p>
+      </div>
+    </div>
+    <div class="article" id="obrUdef">
+      <h4>5.) Sekcie User-defined pages a Entry page</h4>
+      <div class="imgs">
+        <a href="./img/userdefinedpages.png" target="_blank"><img id="imgMargin" src="./img/userdefinedpages.png"></a>
+        <a href="./img/entrypage.png" target="_blank"><img src="./img/entrypage.png"></a>
+      </div>
+      <div class="text">
+        <p>
+          V sekcii <span id="sekcia">User-defined pages</span> vkladáme odkaz na nami vytvorenú web stránku do PLC. 
+          Postup je nasledovný: zvolí sa priečinok, kde sa nachádzajú zdrojové súbory web stránky (<i>.html, .css, .js</i>) a zvolí 
+          sa úvodná HTML stránka ktorá sa má zobraziť. Nakoniec sa celému webu pridá meno, ktorým sa bude zobrazovať na stránke od Siemensu 
+          pod User-defined pages. Keďže sa tam vkladá len defaultná web stránka, na ostatné súbory ako sú <i>.css</i> alebo <i>.js</i> sa treba
+          odkazovať priamo v nej.
+        </p>
+        <p>
+          V sekcii <span id="sekcia">Advanced</span> nájde možnosť výberu čísla dátového bloku pre náš web. Pôvodne je tam nastavené hodnota 333 a nebolo nutné ju meniť.
+          Táto hodnota sa úvádza do programového bloku v odseku <a href="#obrWblok" id="link">3.) Vloženie web servera</a>.
+        </p>
+        <p>
+          Po vložení správnych ciest pre zdrojové súbory webu môžeme kliknúť na tlačidlo <span id="sekcia">Generate blocks</span>. 
+          Ešte je nutné zvoliť aby sa ako domovská stránka zobrazovala naša, a nie stránka od spoločnosti Siemens. To sa dá nastaviť v sekcii <span id="sekcia">Entry page</span>, 
+          kde zvolíme možnosť UP1.
+        </p>
+      </div>
+    </div>
+    <footer>
+      <p>Filip Kalus, 2020/2021</p>
+    </footer>
+  </body>
+</html>

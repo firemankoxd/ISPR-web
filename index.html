@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="sk">
+  <head>
+    <meta charset="utf-8">
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="./img/krisicon.png">
+    <meta name="author" content="Filip Kalus">
+    <title>Vizualizácia | Filip Kalus</title>
+    <link rel="stylesheet" href="./style.css">
+    <script src="jquery-2.0.2.min.js"></script>
+    <script src="https://kit.fontawesome.com/0797fc1598.js" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="img">
+          <a href="http://kris.uniza.sk/" target="_blank"><img src="./img/logoV2.png"></a>
+        </div>
+        <div class="nadpis">
+          <h1>Web server pre PLC od spoločnosti Siemens</h1>
+          <h4>Návod na tvorbu vizualizačného rozhrania k pracovisku pomocou PLC Web servera</h4>
+        </div>
+      </div>
+      <nav>
+        <ul>
+          <li><a class="active" href="index.html"><i class="fas fa-home"></i>Domov</a></li>
+          <li><a href="about.html"><i class="fas fa-question-circle"></i>O projekte</a></li>
+          <li><a href="tiaportal.html"><i class="fas fa-chalkboard-teacher"></i>TIA Portal</a></li>
+          <li><a href="html.html"><i class="fab fa-html5"></i>HTML</a></li>
+          <li><a href="javascript.html"><i class="fab fa-js-square"></i>JavaScript</a></li>
+          <li><a href="contact.html"><i class="fas fa-address-book"></i>Kontakt</a></li>
+        </ul>
+      </nav>
+      <script src="canvas.js"></script>
+    </header>
+    <div class="control">
+      <h2>OVLÁDACÍ PANEL</h2>
+      <div id="control-divs">
+        <div id="startStop">
+          <h3>Systém</h3>
+          <p>Stav systému: <span id="statusText">###</span></p>
+          <form method="post" id="submit-StartStop" action="">
+            <input type="submit" id="submit-startStop-button" value="Štart">
+          </form>
+        </div>
+        <div id="vyska">
+          <h3>Výškové parametre</h3>
+          <p>Skutočná výška loptičky: <span id="realHeight">###</span> [%]</p>
+          <p>Nastavená výška loptičky: <span id="setHeight">###</span> [%]</p>
+          <form method="post" id="submit-setHeight" action="">
+            <input type="number" id="setHeight-value" min="0" max="100">
+            [%]
+            <input type="submit" id="button-right" value="Nastaviť výšku">
+          </form>
+        </div>
+        <div id="sinus">
+          <h3>Sínusový signál</h3>
+          <p>Budenie sínusovým signálom: <span id="sinusStatus">###</span></p>
+          <form method="post" id="submit-sinusStatus" action="">
+            <input type="submit" id="submit-sinus-button" value="Zapnúť">
+          </form>
+          <p>Frekencia sínusového signálu: <span id="sinusFreq">###</span> [Hz]</p>
+          <form method="post" id="submit-sinusValue" action="">
+            <input type="number" id="sinusFreq-value" min="0" max="100">
+            [Hz]
+            <input type="submit" id="button-right" value="Nastaviť frekvenciu">
+          </form>
+        </div>
+        <div id="vykon">
+          <h3>Výkon PWM</h3>
+          <p>Manuálne zadávanie výkonu PWM: <span id="pwmStatus">###</span></p>
+          <form method="post" id="submit-pwmStatus" action="">
+            <input type="submit" id="submit-pwm-button" value="Zapnúť">
+          </form>
+          <p>Skutočná hodnota výkonu PWM: <span id="pwmValue">###</span> [%]</p>
+          <form method="post" id="submit-pwmValue" action="">
+            <input type="number" id="pwmValue-value" min="0" max="100">
+            [%]
+            <input type="submit" id="button-right" value="Nastaviť výkon">
+          </form>
+        </div>
+        <div id="regulacia">
+          <h3>PID Regulácia</h3>
+          <p>Nastavenie parametrov PID: <span id="PID_customvals_enable">###</span></p>
+          <form method="post" id="submit-PID-customvals-status" action="">
+            <input type="submit" id="submit-PID-customvals-status-button" value="Manuálne">
+          </form>
+          <p>Zložka P: <span id="PID_P_enable">###</span></p>
+          <form method="post" id="submit-PID-P-status" action="">
+            <input type="submit" id="submit-P-status-button" value="Zapnúť">
+          </form>
+          <p>Zložka I: <span id="PID_I_enable">###</span></p>
+          <form method="post" id="submit-PID-I-status" action="">
+            <input type="submit" id="submit-I-status-button" value="Zapnúť">
+          </form>
+          <p>Zložka D: <span id="PID_D_enable">###</span></p>
+          <form method="post" id="submit-PID-D-status" action="">
+            <input type="submit" id="submit-D-status-button" value="Zapnúť">
+          </form>
+        </div>
+        <div id="regulacia-2nd">
+          <h3>PID Parametre</h3>
+          <p>Hodnota Kp: <span id="PID_P_val">###</span></p>
+          <form method="post" id="submit-PID-P-value" action="">
+            <input type="number" step="0.001" min="0" id="submit-P-value-value">
+            <input type="submit" id="button-right" value="Nastaviť hodnotu Kp">
+          </form>
+          <p>Hodnota Ti: <span id="PID_I_val">###</span> [ms]</p>
+          <form method="post" id="submit-PID-I-value" action="">
+            <input type="number" step="0.001" min="0" id="submit-I-value-value">
+            [ms]
+            <input type="submit" id="button-right" value="Nastaviť hodnotu Ti">
+          </form>
+          <p>Hodnota Td: <span id="PID_D_val">###</span> [ms]</p>
+          <form method="post" id="submit-PID-D-value" action="">
+            <input type="number" step="0.001" min="0" id="submit-D-value-value">
+            [ms]
+            <input type="submit" id="button-right" value="Nastaviť hodnotu Td">
+          </form>
+          <p>Hodnota Time Lag pre derivačnú zložku: <span id="PID_TL_val">###</span> [ms]</p>
+          <form method="post" id="submit-PID-TL-value" action="">
+            <input type="number" step="0.001" min="0" id="submit-TL-value-value">
+            [ms]
+            <input type="submit" id="button-right" value="Nastaviť hodnotu Time Lag">
+          </form>
+        </div>
+      </div>
+    </div>
+    <script src="script.js"></script>
+    <footer>
+      <p>Filip Kalus, 2020/2021</p>
+    </footer>
+  </body>
+</html>

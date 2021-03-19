@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="sk">
+  <head>
+    <meta charset="utf-8">
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="./img/krisicon.png">
+    <meta name="author" content="Filip Kalus">
+    <title>Vizualizácia | Filip Kalus</title>
+    <link rel="stylesheet" href="./style.css">
+    <script src="jquery-2.0.2.min.js"></script>
+    <script src="https://kit.fontawesome.com/0797fc1598.js" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="img">
+          <a href="http://kris.uniza.sk/" target="_blank"><img src="./img/logoV2.png"></a>
+        </div>
+        <div class="nadpis">
+          <h1>Web server pre PLC od spoločnosti Siemens</h1>
+          <h4>Návod na tvorbu vizualizačného rozhrania k pracovisku pomocou PLC Web servera</h4>
+        </div>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="index.html"><i class="fas fa-home"></i>Domov</a></li>
+          <li><a class="active" href="about.html"><i class="fas fa-question-circle"></i>O projekte</a></li>
+          <li><a href="tiaportal.html"><i class="fas fa-chalkboard-teacher"></i>TIA Portal</a></li>
+          <li><a href="html.html"><i class="fab fa-html5"></i>HTML</a></li>
+          <li><a href="javascript.html"><i class="fab fa-js-square"></i>JavaScript</a></li>
+          <li><a href="contact.html"><i class="fas fa-address-book"></i>Kontakt</a></li>
+        </ul>
+      </nav>
+    </header>
+    <div class="article" id="obrPrac">
+      <div class="imgs">
+        <a href="./img/pracovisko.png" target="_blank"><img src="./img/pracovisko.png"></a>
+      </div>
+      <div class="text">
+        <p>
+          Tento web slúži ako opis môjho postupu pri vypracovávaní zadania mojej bakalárske práce. 
+          Inými slovami, je to tutoriál na vytvoreneie vizualizačného rozhrania k PLC od spoločnosti Siemens.
+        </p>
+        <p>
+          Toto vizualizačné rozhranie je naprogramované pre pracovisko na riadenie výšky loptičky, čo bolo možné vidieť na úvodnej stránke. 
+          Ako už sám obrázok hovorí, pracovisko sa skladá z nasledujúcich častí:
+          <ol type="a">
+            <li>Nosná konštrukcia</li> - vyrobená z dreveného masívu, sú na nej upevnené všetky ostatné prvky <br><br>
+            <li>Ultrazvukový snímač</li> - rozsah 20 - 150 cm, meria vzdialenosť loptičky na princípe 
+            <a href="https://www.terabee.com/time-of-flight-principle/" target="_blank" id="link">Time Of Flight</a>, 
+            jeho výstupom je prúdový signál v rozsahu 4 - 20 mA<br><br>
+            <li>Plastová trubica</li> - vytvorená z plastovej fólie stočenej do kruhového tvaru, 
+            nemá konštantný priemer po celej dĺžke, aby nevznikal problém pri regulácii výšky loptičky<br><br>
+            <li>Loptička</li> - klasická stolnotenisová loptička s priemerom 40 mm a hmotnosťou 2,7 g<br><br>
+            <li>Stabilizátor prúdu vzduchu</li> - zložený z trubičiek malého priemeru, rozdeľuje špirálovitý prúd vzduchu z turbíny na samostatné prúdy, 
+            ktoré sa spájajú do kontinuálneho prúdu vdzuchu<br><br>
+            <li>Turbína</li> - jedná sa o vrtuľu, resp. jednosmerný motor s menovitým napätím na 12 V, ktorý vytvára prúd vzduchu smerujúci do trubice<br><br>
+            <li>Skrinka rozhraní a napájania</li> - slúži na pripojenie turbíny a snímača k PLC
+          </ol>
+        </p>
+      </div>
+    </div>
+    <div class="article" id="last">
+      <div class="text">
+        <p>
+          Spoločnosť Siemens poskytuje mnoho užitočných návodov na čítanie tagov alebo zápis do tagov v PLC, no väčšinou sa jedná o jednoduché riešenie pomocou HTML kódu. 
+          Sám som si toto riešenie vyskúšal a prišiel na jeden nedostatok - takto napísaný web nedokáže ukazovať aktuálne hodnoty tagov, teda načíta aká bola hodnota tagu v momente
+          načítania stránky a stránka bude túto hodnotu ukazovať až do ďalšieho refreshu. Takže keď som načítal web a následne zmenil hodnotu nejakého tagu napr. pomocou HMI panelu,
+          web ukazoval stále pôvodnú - nezmenenú hodnotu.
+        </p>
+        <p>
+          Riešením pre tento problém bolo cyklicky z PLC načítavať hodnoty premenných pomocou GET requestu a pomocou JavaScriptu ich vkladať do HTML elementov. 
+          Na tejto webstránke je opísaný celý postup od vytvorenia web servera až po prepojenie tagov v PLC.
+        </p>
+        <p>
+          Web je členený na viacero podstránok, z ktorých sa samotného návodu týkajú stránky s názvami <a href="tiaportal.html" id="link">TIA Portal</a>, 
+          <a href="HTML.html" id="link">HTML</a> a <a href="javascript.html" id="link">JavaScript</a>.
+        </p>
+      </div>
+    </div>
+    <footer>
+      <p>Filip Kalus, 2020/2021</p>
+    </footer>
+  </body>
+</html>
