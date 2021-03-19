@@ -214,7 +214,7 @@ canvas {
 .article {
   font-size: 17px;
   padding: 10px;
-  margin: 20px;
+  margin: 20px 10%;
   border-radius: 10px;
   background: #3d405b;
   color: white;
@@ -319,10 +319,16 @@ table pre {
   overflow: auto;
   color: black;
   background: #A9AABC;
+  display: inline-block;
+  min-width: 50%;
 }
 
 #code-comment {
   color: #005700;
+}
+
+#code-change {
+  color: #750735;
 }
 
 .article img {
@@ -389,8 +395,14 @@ footer {
   header {
     height: 160px;
   }
+  .article {
+    margin: 20px 5%;
+  }
   .article table {
     margin-left: 0;
+  }
+  #code-insert {
+    display: block;
   }
 }
 
@@ -420,6 +432,7 @@ footer {
   }
   .article {
     font-size: 14px;
+    margin: 20px;
   }
   .control {
     border-radius: 5px;
